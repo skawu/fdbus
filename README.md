@@ -46,41 +46,41 @@ How to build
 >>>> For Ubuntu host version (running at host machine)
 Dependence:
 - cmake, gcc are installed
-1. build protocol buffer
-    1.1 ```cd ~/workspace```
-    1.2 ```git clone https://github.com/protocolbuffers/protobuf.git``` *#get protobuf source code*
-    1.3 ```cd protobuf;git submodule update --init --recursive```
-    1.4 ```mkdir -p build/install;cd build``` *#create directory for out-of-source build*
-    1.5 ```cmake -DCMAKE_INSTALL_PREFIX=install -DBUILD_SHARED_LIBS=1 ../cmake```
-    1.6 ```make -j4 install``` *#build and install to build/install directory*
-2. build fdbus
-    2.1 ```cd ~/workspace```
-    2.2 ```git clone https://github.com/jeremyczhen/fdbus.git``` *#get fdbus source code*
-    2.3 ```cd fdbus;mkdir -p build/install;cd build``` *#create directory for out-of-source build*
-    2.4 ```cmake -DSYSTEM_ROOT=~/workspace/protobuf/build/install -DCMAKE_INSTALL_PREFIX=install ../cmake```
-    2.5 ```PATH=~/workspace/protobuf/build/install/bin:$PATH make``` *#set PATH to the directory where protoc can be found*
+1. build protocol buffer  
+    1.1 ```cd ~/workspace```  
+    1.2 ```git clone https://github.com/protocolbuffers/protobuf.git``` *#get protobuf source code*  
+    1.3 ```cd protobuf;git submodule update --init --recursive```  
+    1.4 ```mkdir -p build/install;cd build``` *#create directory for out-of-source build*  
+    1.5 ```cmake -DCMAKE_INSTALL_PREFIX=install -DBUILD_SHARED_LIBS=1 ../cmake```  
+    1.6 ```make -j4 install``` *#build and install to build/install directory*  
+2. build fdbus  
+    2.1 ```cd ~/workspace```  
+    2.2 ```git clone https://github.com/jeremyczhen/fdbus.git``` *#get fdbus source code*  
+    2.3 ```cd fdbus;mkdir -p build/install;cd build``` *#create directory for out-of-source build*  
+    2.4 ```cmake -DSYSTEM_ROOT=~/workspace/protobuf/build/install -DCMAKE_INSTALL_PREFIX=install ../cmake```  
+    2.5 ```PATH=~/workspace/protobuf/build/install/bin:$PATH make``` *#set PATH to the directory where protoc can be found*  
 
 >>>> For cross compiling on Ubuntu (target version)
 Dependence:
 - cmake, gcc and toolchain are installed
-1 build protocol buffer
-    1.1 ```cd ~/workspace```
-    1.2 create toolchain.cmake *#create toolchain.cmake and set g++ and gcc for target build in cmake/toolchain.cmake (see below)*
-    1.3 ```git clone https://github.com/protocolbuffers/protobuf.git protobuf-host``` *#get protobuf source code for host build*
-    1.4 ```cd protobuf-host && git submodule update --init --recursive && cd ..```
-    1.5 ```cp protobuf-host protobuf-target -r``` *#create a copy for cross compiling*
-    1.6 ```cd protobuf-host;mkdir -p build/install;cd build``` *#create directory for out-of-source build*
-    1.7 ```cmake -DCMAKE_INSTALL_PREFIX=install -DBUILD_SHARED_LIBS=1 ../cmake```
-    1.8 ```make -j4 install``` #build and install to build/install directory; now we have protoc running at host
-    1.9 ```cd ../../protobuf-target;mkdir -p build/install;cd build``` *#create directory for out-of-source build*
-    1.10```cmake -DCMAKE_INSTALL_PREFIX=install -DBUILD_SHARED_LIBS=1 -DCMAKE_TOOLCHAIN_FILE=../../toolchain.cmake ../cmake```
-    1.11```PATH=~/workspace/protobuf-host/build/install/bin:$PATH make -j4 install``` *#build and install to build/install directory*
-2. build fdbus
-    2.1 ```cd ~/workspace```
-    2.2 ```git clone https://github.com/jeremyczhen/fdbus.git```
-    2.3 ```cd fdbus;mkdir -p build/install;cd build```
-    2.4 ```cmake -DSYSTEM_ROOT=~/workspace/protobuf-target/build/install -DCMAKE_INSTALL_PREFIX=install -DCMAKE_TOOLCHAIN_FILE=../../toolchain.cmake ../cmake```
-    2.5 ```PATH=~/workspace/protobuf-host/build/install/bin:$PATH make``` *#set PATH to the directory where protoc can be found*
+1 build protocol buffer  
+    1.1 ```cd ~/workspace```  
+    1.2 create toolchain.cmake *#create toolchain.cmake and set g++ and gcc for target build in cmake/toolchain.cmake (see below)*  
+    1.3 ```git clone https://github.com/protocolbuffers/protobuf.git protobuf-host``` *#get protobuf source code for host build*  
+    1.4 ```cd protobuf-host && git submodule update --init --recursive && cd ..```  
+    1.5 ```cp protobuf-host protobuf-target -r``` *#create a copy for cross compiling*  
+    1.6 ```cd protobuf-host;mkdir -p build/install;cd build``` *#create directory for out-of-source build*  
+    1.7 ```cmake -DCMAKE_INSTALL_PREFIX=install -DBUILD_SHARED_LIBS=1 ../cmake```  
+    1.8 ```make -j4 install``` #build and install to build/install directory; now we have protoc running at host  
+    1.9 ```cd ../../protobuf-target;mkdir -p build/install;cd build``` *#create directory for out-of-source build*  
+    1.10```cmake -DCMAKE_INSTALL_PREFIX=install -DBUILD_SHARED_LIBS=1 -DCMAKE_TOOLCHAIN_FILE=../../toolchain.cmake ../cmake```  
+    1.11```PATH=~/workspace/protobuf-host/build/install/bin:$PATH make -j4 install``` *#build and install to build/install directory*  
+2. build fdbus  
+    2.1 ```cd ~/workspace```  
+    2.2 ```git clone https://github.com/jeremyczhen/fdbus.git```  
+    2.3 ```cd fdbus;mkdir -p build/install;cd build```  
+    2.4 ```cmake -DSYSTEM_ROOT=~/workspace/protobuf-target/build/install -DCMAKE_INSTALL_PREFIX=install -DCMAKE_TOOLCHAIN_FILE=../../toolchain.cmake ../cmake```  
+    2.5 ```PATH=~/workspace/protobuf-host/build/install/bin:$PATH make``` *#set PATH to the directory where protoc can be found*  
 
 >>>> For QNX
 The same as cross compiling, but when building fdbus, should add the following option to cmake since QNX doesn't support peercred:
@@ -89,19 +89,19 @@ The same as cross compiling, but when building fdbus, should add the following o
 >>>> For Windows version
 Dependence:
 - cmake, msvc are installed
-1 build protocol buffer
-    1.1 ```cd c:\workspace```
-    1.2 *#suppose source code of protocol buffer is already downloaded and placed at c:\workspace\protobuf*
-    1.3 ```cd protobuf;mkdir -p cbuild\install;cd cbuild``` *#create directory for out-of-source build*
-    1.4 ```cmake -DCMAKE_INSTALL_PREFIX=install ..\cmake```
-    1.5 *open protobuf.sln in c:\workspace\protobuf\cbuild and build project INSTALL*
-2. build fdbus
-    2.1 ```cd ~/workspace```
-    2.2 *#suppose source code of fdbus is already downloaded and placed at c:\workspace\fdbus*
-    2.3 ```cd fdbus;mkdir -p build\install;cd build``` *#create directory for out-of-source build*
-    2.4 ```cmake -DSYSTEM_ROOT=c:\workspace\protobuf\build\install -DCMAKE_INSTALL_PREFIX=install ..\cmake```
-    2.5 *copy c:\workspace\protobuf\cbuild\install\bin\protoc.exe to the directory in PATH environment variable*
-    2.6 *open fdbus.sln in c:\workspace\fdbus\build and build project INSTALL*
+1 build protocol buffer  
+    1.1 ```cd c:\workspace```  
+    1.2 *#suppose source code of protocol buffer is already downloaded and placed at c:\workspace\protobuf*  
+    1.3 ```cd protobuf;mkdir -p cbuild\install;cd cbuild``` *#create directory for out-of-source build*  
+    1.4 ```cmake -DCMAKE_INSTALL_PREFIX=install ..\cmake```  
+    1.5 *open protobuf.sln in c:\workspace\protobuf\cbuild and build project INSTALL*  
+2. build fdbus  
+    2.1 ```cd ~/workspace```  
+    2.2 *#suppose source code of fdbus is already downloaded and placed at c:\workspace\fdbus*  
+    2.3 ```cd fdbus;mkdir -p build\install;cd build``` *#create directory for out-of-source build*  
+    2.4 ```cmake -DSYSTEM_ROOT=c:\workspace\protobuf\build\install -DCMAKE_INSTALL_PREFIX=install ..\cmake```  
+    2.5 *copy c:\workspace\protobuf\cbuild\install\bin\protoc.exe to the directory in PATH environment variable*  
+    2.6 *open fdbus.sln in c:\workspace\fdbus\build and build project INSTALL*  
 
 How to run
 ----------
@@ -129,37 +129,37 @@ SET(CMAKE_C_COMPILER ~/project/android/workspace/prebuilts/gcc/linux-x86/aarch64
 cmake options
 -------------
 >>>> The following options can be specified with -Dfdbus_XXX=ON/OFF when running cmake
-- fdbus_BUILD_TESTS
-    *ON : build examples
-     OFF: don't build examples
-- fdbus_ENABLE_LOG
-    *ON : enable log output of fdbus lib
-     OFF: disable log output of fdbus lib
+- fdbus_BUILD_TESTS  
+    *ON : build examples  
+     OFF: don't build examples  
+- fdbus_ENABLE_LOG  
+    *ON : enable log output of fdbus lib  
+     OFF: disable log output of fdbus lib  
 - fdbus_LOG_TO_STDOUT 
-     ON : send fdbus log to stdout (terminal)
-    *OFF: fdbus log is sent to log server
-- fdbus_ENABLE_MESSAGE_METADATA
-    *ON : time stamp is included in fdbus message to track delay of message during request-reply interaction
-     OFF: time stamp is disabled
-- fdbus_SOCKET_BLOCKING_CONNECT
-     ON : socket method connect() will be blocked forever if server is not ready to accept
-    *OFF: connect() will be blocked with timer to avoid permanent blocking
-- fdbus_SOCKET_ENABLE_PEERCRED
-    *ON : peercred of UDS (Unix Domain Socket) is enabled
-     OFF: peercred of UDS is disabled
-- fdbus_ALLOC_PORT_BY_SYSTEM
-     ON : socket number of servers are allocated by the system
-    *OFF: socket number of servers are allocated by name server
-- fdbus_SECURITY
-     ON : enable security
-    *OFF: disable security
+     ON : send fdbus log to stdout (terminal)  
+    *OFF: fdbus log is sent to log server  
+- fdbus_ENABLE_MESSAGE_METADATA  
+    *ON : time stamp is included in fdbus message to track delay of message during request-reply interaction  
+     OFF: time stamp is disabled  
+- fdbus_SOCKET_BLOCKING_CONNECT  
+     ON : socket method connect() will be blocked forever if server is not ready to accept  
+    *OFF: connect() will be blocked with timer to avoid permanent blocking  
+- fdbus_SOCKET_ENABLE_PEERCRED  
+    *ON : peercred of UDS (Unix Domain Socket) is enabled  
+     OFF: peercred of UDS is disabled  
+- fdbus_ALLOC_PORT_BY_SYSTEM  
+     ON : socket number of servers are allocated by the system  
+    *OFF: socket number of servers are allocated by name server  
+- fdbus_SECURITY  
+     ON : enable security  
+    *OFF: disable security  
 >>>> The following options can be specified with -DMACRO_DEF='VARIABLE=value;VARIABLE=value'
-- FDB_CFG_SOCKET_PATH
-    specify directory of UDS file
-    default: /tmp
-- CONFIG_SOCKET_CONNECT_TIMEOUT
-    specify timeout of connect() when connect to socket server in ms. "0" means block forever.
-    default: 2000
+- FDB_CFG_SOCKET_PATH  
+    specify directory of UDS file  
+    default: /tmp  
+- CONFIG_SOCKET_CONNECT_TIMEOUT  
+    specify timeout of connect() when connect to socket server in ms. "0" means block forever.  
+    default: 2000  
 
 Security concept
 ----------------
